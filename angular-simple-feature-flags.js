@@ -2,24 +2,43 @@
 	
 	angular.module('simpleFeatureFlags', ['ng'])
 
-
 	.provider('FeatureFlags', function() {
     
     // private
     var flags = [];
 
+    /**
+   	* Checks if the config object is in the valid format and is not a duplicate
+		* @param {object} flagObj a config object in the example format.: {'id': 'foo', 'active': false}
+		* @returns {boolean} the validity of the flagObj
+		*/
 		function isValidFlagObj (flagObj) {
-			return (typeof flagObj.id === 'string' && typeof flagObj.active === 'boolean' && !isDuplicate(flagObj)) ? true : false;
+			return (typeof flagObj.id === 'string' && typeof flagObj.active === 'boolean' && !isDuplicate(flagObj));
 		}
 
+		/**
+   	* Checks if the config object is not a duplicate
+		* @param {object} flagObj a config object in the example format.: {'id': 'foo', 'active': false}
+		* @returns {boolean} the duplicate status of the flagObj
+		*/
 		function isDuplicate (flagObj) {
 			return typeof _.find(flags, function(flag){ return flagObj.id === flag.id}) === 'object';
 		}
 
+		/**
+   	* Checks if the supplied argument is a string
+		* @param {string} flagId an id string used to identify a flag object 
+		* @returns {boolean} the status of the supplied string
+		*/
 		function isString (flagId) {
 			return typeof flagId === 'string';
 		}
 
+		/**
+   	* Accepts a string and returns a matching flag object
+		* @param {string} flagId an id string used to identify a flag object 
+		* @returns {object|boolean} the matched object or false if there is no match
+		*/
 		function getFlag (flagId) {
 
 			var targetObj;
@@ -32,13 +51,26 @@
 
 		}
 
+
+		/**
+   	* Add a new flag object to the config array
+		* @param {object} flagObj a config object in the example format.: {'id': 'foo', 'active': false}
+		* @returns {boolean} true if the object was successfully added to the array, otherwise false
+		*/
 		function addFlag(flagObj) {
 
 			return isValidFlagObj(flagObj) ? flags.push(flagObj) > 0 : false;
 
 		}
 
+		/**
+   	* Adds an array of config objects to the config array
+		* @param {array} configArray an array of config objects
+		* @returns {boolean} true if flag/s were added, otherwise false
+		*/
 		function addFlags(configArray) {
+
+			var intialLength = flags.length;
 
 			if (_.isArray(configArray)) {
 
@@ -48,8 +80,15 @@
 
 			}
 
+			return flags.length > intialLength ? true : false;
+
 		}
 
+		/**
+   	* remove a flag from the config array
+		* @param {string} flagId an id string used to identify a flag object
+		* @returns {boolean} true if flag was removed, otherwise false
+		*/
 		function removeFlag(flagId) {
 
 			var status = false, flagLength = flags.length;
@@ -61,12 +100,17 @@
 					status = true;
 				}
 
-			} 
+			}
 
 			return status;
 
 		}
 
+		/**
+   	* returns the status of the flagId provided
+		* @param {string} flagId an id string used to identify a flag object
+		* @returns {boolean} the status of the requested flag, false if the flag doesn't exist
+		*/
 		function getFlagStatus(flagId) {
 
 			var targetObj = getFlag(flagId);
@@ -74,6 +118,12 @@
 
 		}
 
+		/**
+   	* sets the status of the flagId provided
+		* @param {string} flagId an id string used to identify a flag object
+		* @param {boolean} new status for the flagId provided
+		* @returns {boolean} true if the flag exists, otherwise false
+		*/
 		function setFlagStatus(flagId, newStatus) {
 
 			var targetObj = getFlag(flagId);
@@ -88,12 +138,20 @@
 
 		}
 
+		/**
+   	* get the array of flags
+		* @returns {array} an array of flag objects
+		*/
 		function getAllFlags(){
 			return flags;
 		}
 
+		/**
+   	* reset the flags object to an empty array
+		* @returns {array} an empty array
+		*/
 		function removeAllFlags(){
-			flags = [];
+			return flags = [];
 		}
 
     // public 
@@ -111,8 +169,13 @@
 
     };
 
+		/**
+   	* Adds an array of config objects to the config array - exposed to the app config
+		* @param {array} configArray an array of config objects
+		* @returns {boolean} true if flag/s were added, otherwise false
+		*/
     this.init = function(configArray){
-    	addFlags(configArray);
+    	return addFlags(configArray);
     };
 
     

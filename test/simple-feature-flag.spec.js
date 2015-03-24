@@ -16,7 +16,6 @@ describe('Costa Feature Flag service', function() {
       expect(true).toBeTruthy();    
   }) 
 
-  
   it('should expose the correct public methods', function() {
 
     expect(FeatureFlags.addFlag).not.toBeUndefined();
@@ -27,12 +26,11 @@ describe('Costa Feature Flag service', function() {
 
   });
 
-
-
   it('should accept an array of flags - json config obj', function () {
 
     expect(FeatureFlags.getAllFlags().length).toEqual(0);
-    FeatureFlags.addFlags(flagsArray);
+    expect(FeatureFlags.addFlags(flagsArray)).toBeTruthy();
+    expect(FeatureFlags.addFlags([]) ).toBeFalsy();
     expect(FeatureFlags.getAllFlags().length).toEqual(2);
 
   });

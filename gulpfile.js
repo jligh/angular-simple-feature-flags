@@ -3,13 +3,14 @@
 var gulp = require('gulp');
 var karma = require('gulp-karma');
  
-var testFiles = [
+var testFiles = []; /*= [
   'client/todo.js',
   'client/todo.util.js',
   'client/todo.App.js',
   'test/client/*.js'
 ];
- 
+ */
+
 gulp.task('test', function() {
   // Be sure to return the stream 
   return gulp.src(testFiles)
