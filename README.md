@@ -29,7 +29,7 @@ Add the module as a dependency to your application:
 
 #### Step 2
 
-Add a Config to your app and use the service's init method to pass a config array
+Add a new config function to your application where you can pass in a default config array using the modules init method.
 
 
 ```html
@@ -49,4 +49,10 @@ angular.module('exampleApp', [
 });
 ```
 
-### TBC...
+#### Note
+
+The config object is an array of objects, see above as an example.
+
+
+
+
