@@ -34,7 +34,8 @@ angular.module('exampleApp', [
         {'id': 'example2', 'active': false}
       ]
     );    
-});
+  }
+);
 ```
 **Note:** The config is expected as an array of objects in the above format.
 

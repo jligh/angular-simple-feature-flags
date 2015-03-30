@@ -1,7 +1,7 @@
 {
   "name": "angular-simple-feature-flags",
   "main": "angular-simple-feature-flags",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "homepage": "https://github.com/costacruise/angular-simple-feature-flags",
   "authors": [
     "Anthony Hunt <hunthunthunt@gmail.com>"
@@ -19,7 +19,10 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "circle.yml",
+    "gulpfile.js",
+    "app.js"
   ],
   "dependencies": {
     "angular": "~1.3.14",
