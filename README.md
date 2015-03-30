@@ -56,7 +56,7 @@ Or as an elements attribute:
 </div>
 ```
 
-\* If installing manually, you will also need to also install [Lodash](https://github.com/lodash/lodash) as a dependency
+\* If installing manually, you will also need to install [Lodash](https://github.com/lodash/lodash) as a dependency
 
 ###Feedback
 Please add any bugs or feedback to the issue queue.
