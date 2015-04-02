@@ -59,6 +59,9 @@ Or as an elements attribute:
 
 \* If installing manually, you will also need to install [Lodash](https://github.com/lodash/lodash) as a dependency
 
+###License
+Angular Simple Feature Flags is licensed under the MIT license
+
 ###Feedback
 Please add any bugs or feedback to the issue queue.
 
