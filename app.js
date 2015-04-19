@@ -5,7 +5,7 @@ angular.module('boilerplate', [
   ])
   .config(function(FeatureFlagsProvider){
 
-    
+    //FeatureFlagsProvider.enableSessionStorage();
     FeatureFlagsProvider.init(
       [ 
         {'id': 'example0', 'active': false}, 

@@ -20,22 +20,35 @@ module.exports = function(config) {
 
     frameworks: ['jasmine'],
 
-    reporters: ['progress', 'coverage'],
+    reporters: ['mocha', 'coverage'],
 
-    preprocessors: {
-      'src/app/**/*.js': ['coverage']
+    // reporter options
+    mochaReporter: {
+      output: 'full'
     },
 
     coverageReporter: {
-      type: 'html',
-      dir: 'coverage/'
+      dir: 'coverage/',
+      reporters: [
+        // generate html reports
+        { type: 'lcov', subdir: '' }
+        // also output to console
+        // { type: 'text' }
+      ]
     },
+
+    preprocessors: {
+      '/**/*.js': ['coverage']
+    },
+
+    
 
     browsers: ['PhantomJS'],
 
     plugins: [
       'karma-phantomjs-launcher',
       'karma-jasmine',
+      'karma-mocha-reporter',
       'karma-coverage',
       'karma-sinon'
     ]

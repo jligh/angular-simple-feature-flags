@@ -1,161 +1,169 @@
 (function(window, angular, undefined) {'use strict';
-	
+
 	angular.module('simpleFeatureFlags', ['ng'])
 
 	.provider('FeatureFlags', function() {
-    
+
     // private
-    var flags = [];
+    this.flags = [];
+    this.sessionsEnabled = false;
 
-    /**
-   	* Checks if the config object is in the valid format and is not a duplicate
-		* @param {object} flagObj a config object in the example format.: {'id': 'foo', 'active': false}
-		* @returns {boolean} the validity of the flagObj
-		*/
-		function isValidFlagObj (flagObj) {
-			return (typeof flagObj.id === 'string' && typeof flagObj.active === 'boolean' && !isDuplicate(flagObj));
-		}
+    // public
+    this.$get = function($rootScope) {
 
-		/**
-   	* Checks if the config object is not a duplicate
-		* @param {object} flagObj a config object in the example format.: {'id': 'foo', 'active': false}
-		* @returns {boolean} the duplicate status of the flagObj
-		*/
-		function isDuplicate (flagObj) {
-			return typeof _.find(flags, function(flag){ return flagObj.id === flag.id}) === 'object';
-		}
-
-		/**
-   	* Checks if the supplied argument is a string
-		* @param {string} flagId an id string used to identify a flag object 
-		* @returns {boolean} the status of the supplied string
-		*/
-		function isString (flagId) {
-			return typeof flagId === 'string';
-		}
-
-		/**
-   	* Accepts a string and returns a matching flag object
-		* @param {string} flagId an id string used to identify a flag object 
-		* @returns {object|boolean} the matched object or false if there is no match
-		*/
-		function getFlag (flagId) {
-
-			var targetObj;
-
-			if (isString(flagId)) {
-				targetObj = _.find(flags, function(flag){ return flag.id === flagId});
-			}
-
-			return targetObj ? targetObj : false;
-
-		}
+      var flags = this.flags;
+      var sessionsEnabled = this.sessionsEnabled;
 
 
-		/**
-   	* Add a new flag object to the config array
-		* @param {object} flagObj a config object in the example format.: {'id': 'foo', 'active': false}
-		* @returns {boolean} true if the object was successfully added to the array, otherwise false
-		*/
-		function addFlag(flagObj) {
+      //console.log(sessionsEnabled);
+      /**
+      * Checks if the config object is in the valid format and is not a duplicate
+      * @param {object} flagObj a config object in the example format.: {'id': 'foo', 'active': false}
+      * @returns {boolean} the validity of the flagObj
+      */
+      function isValidFlagObj (flagObj) {
+        return (typeof flagObj.id === 'string' && typeof flagObj.active === 'boolean' && !isDuplicate(flagObj));
+      }
 
-			return isValidFlagObj(flagObj) ? flags.push(flagObj) > 0 : false;
+      /**
+      * Checks if the config object is not a duplicate
+      * @param {object} flagObj a config object in the example format.: {'id': 'foo', 'active': false}
+      * @returns {boolean} the duplicate status of the flagObj
+      */
+      function isDuplicate (flagObj) {
+        return typeof _.find(flags, function(flag){ return flagObj.id === flag.id}) === 'object';
+      }
 
-		}
+      /**
+      * Checks if the supplied argument is a string
+      * @param {string} flagId an id string used to identify a flag object
+      * @returns {boolean} the status of the supplied string
+      */
+      function isString (flagId) {
+        return typeof flagId === 'string';
+      }
 
-		/**
-   	* Adds an array of config objects to the config array
-		* @param {array} configArray an array of config objects
-		* @returns {boolean} true if flag/s were added, otherwise false
-		*/
-		function addFlags(configArray) {
+      /**
+      * Accepts a string and returns a matching flag object
+      * @param {string} flagId an id string used to identify a flag object
+      * @returns {object|boolean} the matched object or false if there is no match
+      */
+      function getFlag (flagId) {
 
-			var intialLength = flags.length;
+        var targetObj;
 
-			if (_.isArray(configArray)) {
+        if (isString(flagId)) {
+          targetObj = _.find(flags, function(flag){ return flag.id === flagId});
+        }
 
-				_.forEach(configArray, function(element) {
-					addFlag(element);
-				});
+        return targetObj ? targetObj : false;
 
-			}
+      }
 
-			return flags.length > intialLength ? true : false;
 
-		}
+      /**
+      * Add a new flag object to the config array
+      * @param {object} flagObj a config object in the example format.: {'id': 'foo', 'active': false}
+      * @returns {boolean} true if the object was successfully added to the array, otherwise false
+      */
+      function addFlag(flagObj) {
 
-		/**
-   	* remove a flag from the config array
-		* @param {string} flagId an id string used to identify a flag object
-		* @returns {boolean} true if flag was removed, otherwise false
-		*/
-		function removeFlag(flagId) {
+        return isValidFlagObj(flagObj) ? flags.push(flagObj) > 0 : false;
 
-			var status = false, flagLength = flags.length;
+      }
 
-			if (isString(flagId)) {
-				flags = _.without(flags, _.findWhere(flags, {id: flagId}));
+      /**
+      * Adds an array of config objects to the config array
+      * @param {array} configArray an array of config objects
+      * @returns {boolean} true if flag/s were added, otherwise false
+      */
+      function addFlags(configArray) {
 
-				if (flags.length < flagLength) {
-					status = true;
-				}
+        var intialLength = flags.length;
 
-			}
+        if (_.isArray(configArray)) {
 
-			return status;
+          _.forEach(configArray, function(element) {
+            addFlag(element);
+          });
 
-		}
+        }
 
-		/**
-   	* returns the status of the flagId provided
-		* @param {string} flagId an id string used to identify a flag object
-		* @returns {boolean} the status of the requested flag, false if the flag doesn't exist
-		*/
-		function getFlagStatus(flagId) {
+        return flags.length > intialLength ? true : false;
 
-			var targetObj = getFlag(flagId);
-			return targetObj && targetObj.active !== undefined ? targetObj.active : false;
+      }
 
-		}
+      /**
+      * remove a flag from the config array
+      * @param {string} flagId an id string used to identify a flag object
+      * @returns {boolean} true if flag was removed, otherwise false
+      */
+      function removeFlag(flagId) {
 
-		/**
-   	* sets the status of the flagId provided
-		* @param {string} flagId an id string used to identify a flag object
-		* @param {boolean} new status for the flagId provided
-		* @returns {boolean} true if the flag exists, otherwise false
-		*/
-		function setFlagStatus(flagId, newStatus) {
+        var status = false, flagLength = flags.length;
 
-			var targetObj = getFlag(flagId);
-			var status = false;
+        if (isString(flagId)) {
+          flags = _.without(flags, _.findWhere(flags, {id: flagId}));
 
-			if (targetObj && typeof newStatus === 'boolean') {
-				targetObj.active = newStatus;
-				status = true;
-			}
+          if (flags.length < flagLength) {
+            status = true;
+          }
 
-			return status;
+        }
 
-		}
+        return status;
 
-		/**
-   	* get the array of flags
-		* @returns {array} an array of flag objects
-		*/
-		function getAllFlags(){
-			return flags;
-		}
+      }
 
-		/**
-   	* reset the flags object to an empty array
-		* @returns {array} an empty array
-		*/
-		function removeAllFlags(){
-			return flags = [];
-		}
+      /**
+      * returns the status of the flagId provided
+      * @param {string} flagId an id string used to identify a flag object
+      * @returns {boolean} the status of the requested flag, false if the flag doesn't exist
+      */
+      function getFlagStatus(flagId) {
 
-    // public 
-    this.$get = function() {
+        var targetObj = getFlag(flagId);
+        return targetObj && targetObj.active !== undefined ? targetObj.active : false;
+
+      }
+
+      /**
+      * sets the status of the flagId provided
+      * @param {string} flagId an id string used to identify a flag object
+      * @param {boolean} new status for the flagId provided
+      * @returns {boolean} true if the flag exists, otherwise false
+      */
+      function setFlagStatus(flagId, newStatus) {
+
+        var targetObj = getFlag(flagId);
+        var status = false;
+
+        if (targetObj && typeof newStatus === 'boolean') {
+          targetObj.active = newStatus;
+          $rootScope.$broadcast('featureUpdated', flagId);
+          status = true;
+        }
+
+        return status;
+
+      }
+
+      /**
+      * get the array of flags
+      * @returns {array} an array of flag objects
+      */
+      function getAllFlags(){
+        return flags;
+      }
+
+      /**
+      * reset the flags object to an empty array
+      * @returns {array} an empty array
+      */
+      function removeAllFlags(){
+        return flags = [];
+      }
+
 
 	   	return {
 				addFlag : addFlag,
@@ -175,13 +183,27 @@
 		* @returns {boolean} true if flag/s were added, otherwise false
 		*/
     this.init = function(configArray){
-    	return addFlags(configArray);
+      this.flags = configArray;
     };
 
-    
+    this.enableSessionStorage = function () {
+      this.sessionsEnabled = true;
+    }
+
+
 	})
 
-	.directive('featureFlag', ['FeatureFlags', function(FeatureFlags) {
+	.directive('featureFlag', ['FeatureFlags', '$rootScope', function(FeatureFlags, $rootScope) {
+
+      var determineVisiibility = function (flagStatus, isToggled) {
+        return isToggled === undefined ? flagStatus : !flagStatus;
+      };
+
+      var setVisibility = function (element, attrs) {
+        var flagStatus = determineVisiibility( FeatureFlags.getFlagStatus( attrs.featureKey ), attrs.toggled );
+        flagStatus ? element[0].classList.remove('ng-hide') : element[0].classList.add('ng-hide');
+      };
+
 
 	    return {
 	        restrict: 'AE',
@@ -189,11 +211,16 @@
 
 	            return function ($scope, element, attrs) {
 
-	                if ( !FeatureFlags.getFlagStatus( attrs.featureKey )) {
-	                    element.remove();
-	                } 
-	                
-	                
+                  $rootScope.$on('featureUpdated', function () {
+
+                    setVisibility(element, attrs);
+
+                   });
+
+                  setVisibility(element, attrs);
+
+
+
 	            }
 
 	        }
