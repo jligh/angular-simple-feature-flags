@@ -1,3 +1,5 @@
+[![Circle CI](https://circleci.com/gh/costacruise/angular-simple-feature-flags.svg?style=svg)](https://circleci.com/gh/costacruise/angular-simple-feature-flags)
+
 #Angular Simple Feature Flags
 Angular Simple Feature Flags is a configurable module for [AngularJS](https://angularjs.org/) that supports visibility-toggling (hiding/showing) of application components. [Feature flags](http://en.wikipedia.org/wiki/Feature_toggle) (or feature toggles) are commonly used in CI ([Continuous Integration](http://en.wikipedia.org/wiki/Continuous_integration)) workflows as they allow for code to be continuously released in to production environments, with incomplete features hidden behind a feature flag.
 
