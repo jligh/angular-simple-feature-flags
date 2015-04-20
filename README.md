@@ -106,7 +106,7 @@ flagObject
 (object) A config object in the example format: `{'id': 'foo', 'active': false}`
 ##### Returns 
 (boolean) true if the object was successfully added to the array, otherwise false  
-
+<br><br>
 
 
 
@@ -120,7 +120,7 @@ configArray
 (array) An array of config objects 
 ##### Returns 
 (boolean) true if flag/s were added, otherwise false  
-
+<br><br>
 
 
 
@@ -135,7 +135,7 @@ flagId
 
 ##### Returns 
 (boolean) true if flag was removed, otherwise false  
-
+<br><br>
 
 
 
@@ -150,7 +150,7 @@ flagId
 
 ##### Returns 
 (boolean) the status of the requested flag, false if the flag doesn't exist  
-
+<br><br>
 
 
 
@@ -167,7 +167,7 @@ newStatus
 
 ##### Returns 
 (boolean) true if the flag exists, otherwise false  
-
+<br><br>
 
 
 
@@ -180,7 +180,7 @@ Get the array of flag objects
 
 ##### Returns 
 (array) an array of flag objects  
-
+<br><br>
 
 
 
@@ -192,7 +192,7 @@ Reset the flags object to an empty array
 
 ##### Returns 
 (array) an empty array  
-
+<br><br>
 
 \* If installing manually, you will also need to install [Lodash](https://github.com/lodash/lodash) as a dependency
 
