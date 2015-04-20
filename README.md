@@ -59,9 +59,9 @@ Or as an elements attribute:
 </div>
 ```
 
-**(6) Optional** It also possible to toggle the visibilty of a feature by adding a `toggled` attribute
+**(6) (Optional)** It also possible to toggle the visibilty of a feature by adding a `toggled` attribute.
 
-This is useful when you want to switch between existing and new features.
+This is useful when you want to switch between existing and new features using the same feature flag.
 
 A toggled feature flag:
 
