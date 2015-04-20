@@ -71,7 +71,7 @@ An inverted feature flag:
 </div>
 ```
 
-### API
+### API - Dependency Injection
 
 If you'd like to interface with the Angular Simple Feature Flags module from within a controller or directive, it is easy to do so. Simply add the module as a dependency as follows:
 
@@ -93,6 +93,8 @@ angular.module('exampleApp')
   ]);
 ```
 
+### API - Documentation
+
 #### FeatureFlags.addFlag()
 
 Adds a new flag object to the feature flags array.
@@ -103,7 +105,7 @@ Adds a new flag object to the feature flags array.
 flagObject
 (object) A config object in the example format: `{'id': 'foo', 'active': false}`
 ##### Returns 
-(boolean) true if the object was successfully added to the array, otherwise false
+(boolean) true if the object was successfully added to the array, otherwise false  
 
 
 
@@ -117,7 +119,7 @@ Adds an array of config objects to the config array
 configArray
 (array) An array of config objects 
 ##### Returns 
-(boolean) true if flag/s were added, otherwise false
+(boolean) true if flag/s were added, otherwise false  
 
 
 
@@ -132,7 +134,7 @@ flagId
 (string) An id used to identify a flag object
 
 ##### Returns 
-(boolean) true if flag was removed, otherwise false
+(boolean) true if flag was removed, otherwise false  
 
 
 
@@ -147,7 +149,7 @@ flagId
 (string) An id used to identify a flag object
 
 ##### Returns 
-(boolean) the status of the requested flag, false if the flag doesn't exist
+(boolean) the status of the requested flag, false if the flag doesn't exist  
 
 
 
@@ -164,7 +166,7 @@ newStatus
 (boolean) new status for the flagId provided
 
 ##### Returns 
-(boolean) true if the flag exists, otherwise false
+(boolean) true if the flag exists, otherwise false  
 
 
 
@@ -177,7 +179,7 @@ Get the array of flag objects
 > FeatureFlags.getAllFlags()
 
 ##### Returns 
-(array) an array of flag objects
+(array) an array of flag objects  
 
 
 
@@ -189,7 +191,7 @@ Reset the flags object to an empty array
 > FeatureFlags.removeAllFlags()
 
 ##### Returns 
-(array) an empty array
+(array) an empty array  
 
 
 \* If installing manually, you will also need to install [Lodash](https://github.com/lodash/lodash) as a dependency
