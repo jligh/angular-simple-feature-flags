@@ -98,19 +98,98 @@ angular.module('exampleApp')
 Adds a new flag object to the feature flags array.
 ##### Syntax
 > FeatureFlags.addFlag(flagObject)
+
 ##### Parameters
 flagObject
-(object) A config object in the example format.: {'id': 'foo', 'active': false}
+(object) A config object in the example format: `{'id': 'foo', 'active': false}`
 ##### Returns 
 (boolean) true if the object was successfully added to the array, otherwise false
 
 
-##addFlags()
-##removeFlag
-##getFlagStatus
-##setFlagStatus
-##getAllFlags
-##removeAllFlags
+
+
+#### FeatureFlags.addFlags()
+Adds an array of config objects to the config array
+##### Syntax
+> FeatureFlags.addFlags(configArray)
+
+##### Parameters
+configArray
+(array) An array of config objects 
+##### Returns 
+(boolean) true if flag/s were added, otherwise false
+
+
+
+
+#### FeatureFlags.removeFlag()
+Remove a flag from the config array
+##### Syntax
+> FeatureFlags.removeFlag(flagId)
+
+##### Parameters
+flagId
+(string) An id used to identify a flag object
+
+##### Returns 
+(boolean) true if flag was removed, otherwise false
+
+
+
+
+#### FeatureFlags.getFlagStatus()
+Returns the status of a flag
+##### Syntax
+> FeatureFlags.getFlagStatus(flagId)
+
+##### Parameters
+flagId
+(string) An id used to identify a flag object
+
+##### Returns 
+(boolean) the status of the requested flag, false if the flag doesn't exist
+
+
+
+
+#### FeatureFlags.setFlagStatus()
+Sets the status of the flagId provided
+##### Syntax
+> FeatureFlags.setFlagStatus(flagId, newStatus) 
+
+##### Parameters
+flagId
+(string) An id used to identify a flag object
+newStatus
+(boolean) new status for the flagId provided
+
+##### Returns 
+(boolean) true if the flag exists, otherwise false
+
+
+
+
+
+#### FeatureFlags.getAllFlags()
+Get the array of flag objects
+
+##### Syntax
+> FeatureFlags.getAllFlags()
+
+##### Returns 
+(array) an array of flag objects
+
+
+
+
+#### FeatureFlags.removeAllFlags()
+Reset the flags object to an empty array
+
+##### Syntax
+> FeatureFlags.removeAllFlags()
+
+##### Returns 
+(array) an empty array
 
 
 \* If installing manually, you will also need to install [Lodash](https://github.com/lodash/lodash) as a dependency
@@ -123,5 +202,5 @@ Please add any bugs or feedback to the issue queue.
 
 ###Roadmap
 * Add minification to the gulp build
-* Further document the module’s API
 * Support the inclusion of a config JSON file via $http request
+* Store the flag object in session storage
