@@ -59,18 +59,58 @@ Or as an elements attribute:
 </div>
 ```
 
-**(6) (Optional)** It also possible to toggle the visibilty of a feature by adding a `toggled` attribute.
+**(6) (Optional)** It also possible to toggle the visibilty of a feature by adding an `invert` attribute.
 
 This is useful when you want to switch between existing and new features using the same feature flag.
 
-A toggled feature flag:
+An inverted feature flag:
 
 ```html
-<div feature-flag toggled feature-key="example1">
+<div feature-flag invert feature-key="example1">
   <h1>This is my existing feature</h1>
 </div>
 ```
 
+### API
+
+If you'd like to interface with the Angular Simple Feature Flags module from within a controller or directive, it is easy to do so. Simply add the module as a dependency as follows:
+
+to a controller:
+```javascript
+angular.module('exampleApp')
+  .controller('exampleCtrl', ['FeatureFlags', function(FeatureFlags) {
+      // your code here...
+    }
+  ]);
+```
+
+to a directive:
+```javascript
+angular.module('exampleApp')
+  .directive('exampleDirective', ['FeatureFlags', function(FeatureFlags) {
+      // your code here...
+    }
+  ]);
+```
+
+#### FeatureFlags.addFlag()
+
+Adds a new flag object to the feature flags array.
+##### Syntax
+> FeatureFlags.addFlag(flagObject)
+##### Parameters
+flagObject
+(object) A config object in the example format.: {'id': 'foo', 'active': false}
+##### Returns 
+(boolean) true if the object was successfully added to the array, otherwise false
+
+
+##addFlags()
+##removeFlag
+##getFlagStatus
+##setFlagStatus
+##getAllFlags
+##removeAllFlags
 
 
 \* If installing manually, you will also need to install [Lodash](https://github.com/lodash/lodash) as a dependency

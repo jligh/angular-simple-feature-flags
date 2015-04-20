@@ -81,21 +81,21 @@ describe('The feature Flag directive', function() {
 
   });
 
-  it('hides the element when the feature flag is inactive but toggled - attribute', function () {
+  it('hides the element when the feature flag is inactive but inverted - attribute', function () {
 
     FeatureFlags.addFlag({'id': 'example1', 'active': true});
     scope = $rootScope.$new();
-    element = '<div feature-flag feature-key="example1" toggled><div id="hello" class="xxx">Hello</div></div>';
+    element = '<div feature-flag feature-key="example1" invert><div id="hello" class="xxx">Hello</div></div>';
     element = $compile(element)(scope);
     expect( element.hasClass('ng-hide') ).toBe(true);
 
   });
 
-  it('toggles the visiblity of an elment when applicable event is fired on rootscope', function () {
+  it('toggles the visiblity of an elment when applicable event is fired on rootScope', function () {
 
     FeatureFlags.addFlag({'id': 'example1', 'active': true});
     scope = $rootScope.$new();
-    element = '<div feature-flag feature-key="example1" toggled><div id="hello" class="xxx">Hello</div></div>';
+    element = '<div feature-flag feature-key="example1" invert><div id="hello" class="xxx">Hello</div></div>';
     element = $compile(element)(scope);
     expect( element.hasClass('ng-hide') ).toBe(true);
 

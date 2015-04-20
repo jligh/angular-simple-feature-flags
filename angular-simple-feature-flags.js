@@ -181,12 +181,12 @@
 
 	.directive('featureFlag', ['FeatureFlags', '$rootScope', function(FeatureFlags, $rootScope) {
 
-      var determineVisiibility = function (flagStatus, isToggled) {
-        return isToggled === undefined ? flagStatus : !flagStatus;
+      var determineVisiibility = function (flagStatus, isInverted) {
+        return isInverted === undefined ? flagStatus : !flagStatus;
       };
 
       var setVisibility = function (element, attrs) {
-        var flagStatus = determineVisiibility( FeatureFlags.getFlagStatus( attrs.featureKey ), attrs.toggled );
+        var flagStatus = determineVisiibility( FeatureFlags.getFlagStatus( attrs.featureKey ), attrs.invert );
         flagStatus ? element[0].classList.remove('ng-hide') : element[0].classList.add('ng-hide');
       };
 
