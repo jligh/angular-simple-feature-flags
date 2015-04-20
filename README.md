@@ -59,6 +59,20 @@ Or as an elements attribute:
 </div>
 ```
 
+**(6) Optional** It also possible to toggle the visibilty of a feature by adding a `toggled` attribute
+
+This is useful when you want to switch between existing and new features.
+
+A toggled feature flag:
+
+```html
+<div feature-flag toggled feature-key="example1">
+  <h1>This is my existing feature</h1>
+</div>
+```
+
+
+
 \* If installing manually, you will also need to install [Lodash](https://github.com/lodash/lodash) as a dependency
 
 ###License

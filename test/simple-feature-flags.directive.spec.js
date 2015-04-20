@@ -13,17 +13,16 @@ describe('The feature Flag directive', function() {
   ])
   .config(function(FeatureFlagsProvider){
 
-    FeatureFlagsProvider.enableSessionStorage();
     FeatureFlagsProvider.init(
-      [ 
-        {'id': 'example0', 'active': false}, 
+      [
+        {'id': 'example0', 'active': false},
         {'id': 'example1', 'active': false},
         {'id': 'example2', 'active': false}
       ]
     );
-    
 
-});
+
+  });
 
   beforeEach(module('boilerplate'));
 
@@ -37,7 +36,7 @@ describe('The feature Flag directive', function() {
     FeatureFlags.removeAllFlags();
 
   }));
-  
+
   it('does not remove the element when the feature flag is active', function () {
 
     FeatureFlags.addFlag({'id': 'example0', 'active': true});
@@ -53,47 +52,47 @@ describe('The feature Flag directive', function() {
 
 
   it('removes the element when the feature flag is inactive', function () {
-    
+
     FeatureFlags.addFlag({'id': 'example1', 'active': false});
     scope = $rootScope.$new();
     element = '<div><feature-flag feature-key="example1"><div id="hello" class="xxx">Hello</div></feature-flag></div>';
     element = $compile(element)(scope);
     expect( element.find('feature-flag').hasClass('ng-hide') ).toBe(true);
-    
+
   });
-  
+
   it('removes the element when the feature flag is inactive - attribute', function () {
-    
+
     FeatureFlags.addFlag({'id': 'example1', 'active': false});
     scope = $rootScope.$new();
     element = '<div feature-flag feature-key="example1"><div id="hello" class="xxx">Hello</div></div>';
     element = $compile(element)(scope);
     expect( element.hasClass('ng-hide') ).toBe(true);
-    
+
   });
 
   it('does not remove the element when the feature flag is active - attribute', function () {
-    
+
     FeatureFlags.addFlag({'id': 'example1', 'active': true});
     scope = $rootScope.$new();
     element = '<div feature-flag feature-key="example1"><div id="hello" class="xxx">Hello</div></div>';
     element = $compile(element)(scope);
     expect( element.hasClass('ng-hide') ).toBe(false);
-    
+
   });
 
   it('hides the element when the feature flag is inactive but toggled - attribute', function () {
-    
+
     FeatureFlags.addFlag({'id': 'example1', 'active': true});
     scope = $rootScope.$new();
     element = '<div feature-flag feature-key="example1" toggled><div id="hello" class="xxx">Hello</div></div>';
     element = $compile(element)(scope);
     expect( element.hasClass('ng-hide') ).toBe(true);
-    
+
   });
 
   it('toggles the visiblity of an elment when applicable event is fired on rootscope', function () {
-    
+
     FeatureFlags.addFlag({'id': 'example1', 'active': true});
     scope = $rootScope.$new();
     element = '<div feature-flag feature-key="example1" toggled><div id="hello" class="xxx">Hello</div></div>';
@@ -104,7 +103,7 @@ describe('The feature Flag directive', function() {
     //$rootScope.$broadcast('featureUpdated', 'example1');
 
     expect( element.hasClass('ng-hide') ).toBe(false);
-    
+
   });
 
 

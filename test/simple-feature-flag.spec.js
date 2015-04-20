@@ -12,10 +12,6 @@ describe('Costa Feature Flag service', function() {
     FeatureFlags.removeAllFlags();
   }));
 
-  it ('this is a placeholder', function () {
-      expect(true).toBeTruthy();    
-  }) 
-
   it('should expose the correct public methods', function() {
 
     expect(FeatureFlags.addFlag).not.toBeUndefined();

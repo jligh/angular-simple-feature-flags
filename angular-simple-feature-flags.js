@@ -4,18 +4,18 @@
 
 	.provider('FeatureFlags', function() {
 
-    // private
-    this.flags = [];
-    this.sessionsEnabled = false;
 
-    // public
+    this.flags = [];
+
+
+    this.init = function(configArray){
+      this.flags = configArray;
+    };
+
+
     this.$get = function($rootScope) {
 
       var flags = this.flags;
-      var sessionsEnabled = this.sessionsEnabled;
-
-
-      //console.log(sessionsEnabled);
       /**
       * Checks if the config object is in the valid format and is not a duplicate
       * @param {object} flagObj a config object in the example format.: {'id': 'foo', 'active': false}
@@ -164,7 +164,6 @@
         return flags = [];
       }
 
-
 	   	return {
 				addFlag : addFlag,
 				addFlags : addFlags,
@@ -176,19 +175,6 @@
 	    }
 
     };
-
-		/**
-   	* Adds an array of config objects to the config array - exposed to the app config
-		* @param {array} configArray an array of config objects
-		* @returns {boolean} true if flag/s were added, otherwise false
-		*/
-    this.init = function(configArray){
-      this.flags = configArray;
-    };
-
-    this.enableSessionStorage = function () {
-      this.sessionsEnabled = true;
-    }
 
 
 	})
