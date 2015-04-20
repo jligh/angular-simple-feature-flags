@@ -101,7 +101,7 @@ Adds a new flag object to the feature flags array.
 
 ##### Parameters
 flagObject
-(object) A config object in the example format.: {'id': 'foo', 'active': false}
+(object) A config object in the example format: `{'id': 'foo', 'active': false}`
 ##### Returns 
 (boolean) true if the object was successfully added to the array, otherwise false
 
