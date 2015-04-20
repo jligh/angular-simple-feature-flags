@@ -98,6 +98,7 @@ angular.module('exampleApp')
 Adds a new flag object to the feature flags array.
 ##### Syntax
 > FeatureFlags.addFlag(flagObject)
+
 ##### Parameters
 flagObject
 (object) A config object in the example format.: {'id': 'foo', 'active': false}
