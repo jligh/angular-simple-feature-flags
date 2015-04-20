@@ -1,6 +1,6 @@
 {
   "name": "angular-simple-feature-flags",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Angular simple feature flags",
   "main": "angular-simple-feature-flags.js",
   "scripts": {
