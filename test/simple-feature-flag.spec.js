@@ -4,11 +4,12 @@ describe('Costa Feature Flag service', function() {
 
   beforeEach(module('boilerplate'));
 
-  var FeatureFlags, flagsArray;
+  var FeatureFlags, flagsArray, $rootScope;
 
   beforeEach(inject(function($injector) {
     flagsArray = [ {'id': 'example0', 'active': true}, {'id': 'example1', 'active': false} ];
     FeatureFlags = $injector.get('FeatureFlags');
+    $rootScope = $injector.get('$rootScope');
     FeatureFlags.removeAllFlags();
   }));
 
@@ -19,6 +20,7 @@ describe('Costa Feature Flag service', function() {
     expect(FeatureFlags.getFlagStatus).not.toBeUndefined();
     expect(FeatureFlags.setFlagStatus).not.toBeUndefined();
     expect(FeatureFlags.getAllFlags).not.toBeUndefined();
+    expect(FeatureFlags.guardRoute).not.toBeUndefined();
 
   });
 
@@ -87,7 +89,7 @@ describe('Costa Feature Flag service', function() {
   it('should return a flags status', function(){
 
     FeatureFlags.addFlags(flagsArray);
-    
+
     expect(FeatureFlags.getFlagStatus('example0')).toEqual(true);
     expect(FeatureFlags.getFlagStatus('example1')).toEqual(false);
 
@@ -102,7 +104,7 @@ describe('Costa Feature Flag service', function() {
   it('should set a flags status', function(){
 
     FeatureFlags.addFlags(flagsArray);
-    
+
     FeatureFlags.setFlagStatus('example0', false);
     FeatureFlags.setFlagStatus('example1', true);
 
@@ -121,9 +123,23 @@ describe('Costa Feature Flag service', function() {
 
   it('should return all flags', function(){
 
-    FeatureFlags.addFlags(flagsArray);    
+    FeatureFlags.addFlags(flagsArray);
     expect(FeatureFlags.getAllFlags()).toEqual([ {'id': 'example0', 'active': true}, {'id': 'example1', 'active': false} ]);
 
   });
-  
+
+  it('should guard a route by returning a rejected promise if any flags are disabled', function(done) {
+    FeatureFlags.addFlags(flagsArray);
+    var promise = FeatureFlags.guardRoute(['example1', 'example0']);
+    promise.then(fail, done);
+    $rootScope.$digest();
+  });
+
+  it('should allow a route by returning a resolved promise if all flags are enabled', function(done) {
+    FeatureFlags.addFlags(flagsArray);
+    var promise = FeatureFlags.guardRoute('example0');
+    promise.then(done, fail);
+    $rootScope.$digest();
+  });
+
 });

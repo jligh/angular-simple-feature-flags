@@ -1,8 +1,8 @@
 (function(window, angular, undefined) {'use strict';
 
-	angular.module('simpleFeatureFlags', ['ng'])
+  angular.module('simpleFeatureFlags', ['ng'])
 
-	.provider('FeatureFlags', function() {
+  .provider('FeatureFlags', function() {
 
 
     this.flags = [];
@@ -13,7 +13,7 @@
     };
 
 
-    this.$get = function($rootScope) {
+    this.$get = function($rootScope, $q) {
 
       var flags = this.flags;
       /**
@@ -164,22 +164,42 @@
         return flags = [];
       }
 
-	   	return {
-				addFlag : addFlag,
-				addFlags : addFlags,
-				removeFlag : removeFlag,
-				getFlagStatus : getFlagStatus,
-				setFlagStatus : setFlagStatus,
-				getAllFlags : getAllFlags,
-				removeAllFlags : removeAllFlags
-	    }
+      /**
+      * returns a promise which is resolved if the feature flag is enabled,
+      * or rejected if disabled; intended to be used in a router resolve
+      * function to protect a route
+      * @param {string|array} flagIds one or many flag ids required for the route
+      * @return {promise}
+      */
+      function guardRoute(flagIds) {
+        return $q(function(resolve, reject) {
+          var allActive = true;
+          flagIds = angular.isArray(flagIds) ? flagIds : [flagIds];
+          for (var i=0; i < flagIds.length; i++) {
+            allActive = getFlagStatus(flagIds[i]);
+            if (!allActive) { break; }
+          }
+          (allActive ? resolve : reject)();
+        });
+      }
+
+      return {
+        addFlag : addFlag,
+        addFlags : addFlags,
+        removeFlag : removeFlag,
+        getFlagStatus : getFlagStatus,
+        setFlagStatus : setFlagStatus,
+        getAllFlags : getAllFlags,
+        removeAllFlags : removeAllFlags,
+        guardRoute : guardRoute
+      }
 
     };
 
 
-	})
+  })
 
-	.directive('featureFlag', ['FeatureFlags', '$rootScope', function(FeatureFlags, $rootScope) {
+  .directive('featureFlag', ['FeatureFlags', '$rootScope', function(FeatureFlags, $rootScope) {
 
       var determineVisiibility = function (flagStatus, isInverted) {
         return isInverted === undefined ? flagStatus : !flagStatus;
@@ -191,11 +211,11 @@
       };
 
 
-	    return {
-	        restrict: 'AE',
-	        compile: function () {
+      return {
+          restrict: 'AE',
+          compile: function () {
 
-	            return function ($scope, element, attrs) {
+              return function ($scope, element, attrs) {
 
                   $rootScope.$on('featureUpdated', function () {
 
@@ -207,12 +227,12 @@
 
 
 
-	            }
+              }
 
-	        }
-	    }
+          }
+      }
 
-		}]);
+    }]);
 
 
 })(window, window.angular);

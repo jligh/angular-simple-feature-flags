@@ -1,7 +1,7 @@
 {
   "name": "angular-simple-feature-flags",
   "main": "./angular-simple-feature-flags.js",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "homepage": "https://github.com/costacruise/angular-simple-feature-flags",
   "authors": [
     "Anthony Hunt <hunthunthunt@gmail.com>"
