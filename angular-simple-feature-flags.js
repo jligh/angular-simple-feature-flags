@@ -165,8 +165,8 @@
       }
 
       /**
-      * returns a promise which is resolved if the feature flag is enabled,
-      * or rejected if disabled; intended to be used in a router resolve
+      * returns a promise which is resolved if all provided feature flags are enabled,
+      * or rejected if any one is disabled; intended to be used in a router resolve
       * function to protect a route
       * @param {string|array} flagIds one or many flag ids required for the route
       * @return {promise}

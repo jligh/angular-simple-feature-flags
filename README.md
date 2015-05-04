@@ -30,12 +30,12 @@ angular.module('exampleApp', [
   ])
   .config(function(FeatureFlagsProvider){
     FeatureFlagsProvider.init(
-      [ 
-        {'id': 'example0', 'active': true}, 
+      [
+        {'id': 'example0', 'active': true},
         {'id': 'example1', 'active': false},
         {'id': 'example2', 'active': false}
       ]
-    );    
+    );
   }
 );
 ```
@@ -71,6 +71,32 @@ An inverted feature flag:
 </div>
 ```
 
+**(7)** Guard an entire route by using a resolve function and the `guardRoute` method:
+
+```javascript
+// using ngRoute
+$routeProvider
+  .when('/example', {
+    url: '/example',
+    resolve: {
+      guard: function(FeatureFlags) {
+        return FeatureFlags.guardRoute(['example0', 'example1']);
+      }
+    }
+  }
+})
+
+// using AngularUI Router
+$stateProvider
+  .state('example', {
+    resolve: {
+      guard: function(FeatureFlags) {
+        return FeatureFlags.guardRoute(['example0', 'example1']);
+      }
+    }
+  })
+```
+
 ### API - Dependency Injection
 
 If you'd like to interface with the Angular Simple Feature Flags module from within a controller or directive, it is easy to do so. Simply add the module as a dependency as follows:
@@ -104,8 +130,8 @@ Adds a new flag object to the feature flags array.
 ##### Parameters
 flagObject
 (object) A config object in the example format: `{'id': 'foo', 'active': false}`
-##### Returns 
-(boolean) true if the object was successfully added to the array, otherwise false  
+##### Returns
+(boolean) true if the object was successfully added to the array, otherwise false
 <br><br>
 
 
@@ -117,9 +143,9 @@ Adds an array of config objects to the config array
 
 ##### Parameters
 configArray
-(array) An array of config objects 
-##### Returns 
-(boolean) true if flag/s were added, otherwise false  
+(array) An array of config objects
+##### Returns
+(boolean) true if flag/s were added, otherwise false
 <br><br>
 
 
@@ -133,8 +159,8 @@ Remove a flag from the config array
 flagId
 (string) An id used to identify a flag object
 
-##### Returns 
-(boolean) true if flag was removed, otherwise false  
+##### Returns
+(boolean) true if flag was removed, otherwise false
 <br><br>
 
 
@@ -148,8 +174,8 @@ Returns the status of a flag
 flagId
 (string) An id used to identify a flag object
 
-##### Returns 
-(boolean) the status of the requested flag, false if the flag doesn't exist  
+##### Returns
+(boolean) the status of the requested flag, false if the flag doesn't exist
 <br><br>
 
 
@@ -157,7 +183,7 @@ flagId
 #### FeatureFlags.setFlagStatus()
 Sets the status of the flagId provided
 ##### Syntax
-> FeatureFlags.setFlagStatus(flagId, newStatus) 
+> FeatureFlags.setFlagStatus(flagId, newStatus)
 
 ##### Parameters
 flagId
@@ -165,8 +191,8 @@ flagId
 newStatus
 (boolean) new status for the flagId provided
 
-##### Returns 
-(boolean) true if the flag exists, otherwise false  
+##### Returns
+(boolean) true if the flag exists, otherwise false
 <br><br>
 
 
@@ -178,8 +204,8 @@ Get the array of flag objects
 ##### Syntax
 > FeatureFlags.getAllFlags()
 
-##### Returns 
-(array) an array of flag objects  
+##### Returns
+(array) an array of flag objects
 <br><br>
 
 
@@ -190,8 +216,26 @@ Reset the flags object to an empty array
 ##### Syntax
 > FeatureFlags.removeAllFlags()
 
-##### Returns 
-(array) an empty array  
+##### Returns
+(array) an empty array
+<br><br>
+
+
+
+#### FeatureFlags.guardRoute(flagIds)
+Returns a promise which is resolved if all provided feature flags are enabled,
+or rejected if any one is disabled; intended to be used in a router resolve
+function to protect a route.
+
+##### Parameters
+flagIds
+(string|array) A flag id (string), or array of flag ids
+
+##### Syntax
+> FeatureFlags.guardRoute(['flag-1', 'flag-2'])
+
+##### Returns
+(promise) a promise
 <br><br>
 
 \* If installing manually, you will also need to install [Lodash](https://github.com/lodash/lodash) as a dependency
