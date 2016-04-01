@@ -13,7 +13,7 @@
     };
 
 
-    this.$get = function($rootScope, $q) {
+    this.$get = ['$rootScope', '$q', function($rootScope, $q) {
 
       var flags = this.flags;
       /**
@@ -194,7 +194,7 @@
         guardRoute : guardRoute
       }
 
-    };
+    }];
 
 
   })
